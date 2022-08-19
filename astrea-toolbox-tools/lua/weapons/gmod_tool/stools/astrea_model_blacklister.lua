@@ -12,7 +12,7 @@ TOOL.Information = {
 if CLIENT then
 	language.Add( "tool.astrea_model_blacklister.name", "Model Blacklister" )
 	language.Add( "tool.astrea_model_blacklister.desc", "Adds/Removes a prop from the blacklist" )
-	language.Add( "tool.astrea_model_blacklister.left", "Adds a prop to the blacklist" )
+	language.Add( "tool.astrea_model_blacklister.left", "Adds a prop to the blacklist. Shoot a blacklisted prop to delete it" )
 	language.Add( "tool.astrea_model_blacklister.right", "Removes a prop from the blacklist")
 	language.Add( "tool.astrea_model_blacklister.reload", "Checks if the prop is in the blacklist")
 end
@@ -26,9 +26,13 @@ function TOOL:LeftClick( trace )
 	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 
 	local model = ent:GetModel()
-	AstreaToolbox.Core.AddToList("prop_blacklist_list", model)
-	--AstreaToolbox.Core.Message(ply, , AstreaToolbox.Core.Translated("props_prefix"))
-	AstreaToolbox.Core.Notify(ply, "Added model to the blacklist.", 0, 2)
+	if (AstreaToolbox.Core.GetSetting("prop_blacklist_list")[model]) then
+		ent:Remove()
+	else
+		AstreaToolbox.Core.AddToList("prop_blacklist_list", model)
+		--AstreaToolbox.Core.Message(ply, , AstreaToolbox.Core.Translated("props_prefix"))
+		AstreaToolbox.Core.Notify(ply, "Added model to the blacklist.", 0, 2)
+	end
 
 	return true
 end

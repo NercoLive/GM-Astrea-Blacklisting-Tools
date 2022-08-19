@@ -58,15 +58,13 @@ function TOOL:Reload(trace)
 
 	local ent_class = ent:GetClass()
     local entities = AstreaToolbox.Core.GetSetting("ent_blacklist_list")
-
-    local whitelist = AstreaToolbox.Core.GetSetting("ent_blacklist_reverse")
-    
-    if (whitelist and not entities[ent_class]) or (not whitelist and entities[ent_class]) then 
+   
+    if entities[ent_class] then 
         --AstreaToolbox.Core.Message(ply, "This entity is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
 		AstreaToolbox.Core.Notify(ply, "This entity is in the blacklist", 0, 2)
     else
     	--AstreaToolbox.Core.Message(ply, "This entity is not in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-		AstreaToolbox.Core.Notify(ply, "This entity is in the blacklist", 1, 2)
+		AstreaToolbox.Core.Notify(ply, "This entity is not in the blacklist", 1, 2)
     end
 	
 	return true

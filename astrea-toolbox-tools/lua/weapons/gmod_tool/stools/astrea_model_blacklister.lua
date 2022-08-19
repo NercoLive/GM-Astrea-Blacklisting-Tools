@@ -59,9 +59,7 @@ function TOOL:Reload(trace)
 	local model = string.lower(ent:GetModel())
     local models = AstreaToolbox.Core.GetSetting("prop_blacklist_list")
 
-    local whitelist = AstreaToolbox.Core.GetSetting("prop_blacklist_reverse")
-
-    if (whitelist and not (models[model])) or (not whitelist and (models[model])) then 
+    if models[model] then 
         --AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
 		AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
     else

@@ -19,7 +19,7 @@ end
 
 -- Left click adds the model you are looking at to the blacklist
 function TOOL:LeftClick( trace )
-	if not tr then return end 
+	if not trace then return end 
 	
 	local ent = trace.Entity
 	if ( !IsValid( ent ) ) then return false end 
@@ -41,9 +41,9 @@ function TOOL:LeftClick( trace )
 	return true
 end
 
--- right click removes the model you are looking at to the blacklist
+-- right click removes the model you are looking at from the blacklist
 function TOOL:RightClick( trace )
-	if not tr then return end 
+	if not trace then return end 
 	
 	local ent = trace.Entity
 	if ( !IsValid( ent ) ) then return false end
@@ -60,7 +60,7 @@ function TOOL:RightClick( trace )
 end
 
 function TOOL:Reload(trace)
-	if not tr then return end 
+	if not trace then return end 
 	
 	local ent = trace.Entity
 	if ( !IsValid( ent ) ) then return false end 
@@ -70,15 +70,13 @@ function TOOL:Reload(trace)
 
     local model = string.lower(ent:GetModel())
     local models = AstreaToolbox.Core.GetSetting("prop_blacklist_list")
-
-    if not models then return end
 	
-    if models[model] then 
+    if (models and models[model]) then 
         --AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-	AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
+		AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
     else
     	--AstreaToolbox.Core.Message(ply, "This model is not in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-	AstreaToolbox.Core.Notify(ply, "This model is not in the blacklist", 1, 2)
+		AstreaToolbox.Core.Notify(ply, "This model is not in the blacklist", 1, 2)
     end 
 	
 	return true

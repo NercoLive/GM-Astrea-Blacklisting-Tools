@@ -19,14 +19,18 @@ end
 
 -- Left click adds the entity you are looking at to the blacklist
 function TOOL:LeftClick( trace )
+	if not trace then return end 
+
+	local ent = trace.Entity
+	if ( !IsValid( ent ) ) then return false end
+
 	local ply = self:GetOwner()
 	if not AstreaToolbox.Config.DefaultAdmins.UserGroups[ply:GetUserGroup()] and not AstreaToolbox.Config.DefaultAdmins.Players[ply:SteamID64()] then return end
 
-	local ent = trace.Entity
-	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
-
 	local ent_class = ent:GetClass()
-	if (AstreaToolbox.Core.GetSetting("ent_blacklist_list")[ent_class]) then
+	local entities = AstreaToolbox.Core.GetSetting("ent_blacklist_list")
+
+	if (enitities and entities[ent_class]) then
 		ent:Remove()
 	else
 		AstreaToolbox.Core.AddToList("ent_blacklist_list", ent_class)
@@ -37,13 +41,15 @@ function TOOL:LeftClick( trace )
 	return true
 end
 
--- right click removes the entity you are looking at to the blacklist
+-- right click removes the entity you are looking at from the blacklist
 function TOOL:RightClick( trace )
-	local ply = self:GetOwner()
-	if not AstreaToolbox.Config.DefaultAdmins.UserGroups[ply:GetUserGroup()] and not AstreaToolbox.Config.DefaultAdmins.Players[ply:SteamID64()] then return end
+	if not trace then return end 
 
 	local ent = trace.Entity
 	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+
+	local ply = self:GetOwner()
+	if not AstreaToolbox.Config.DefaultAdmins.UserGroups[ply:GetUserGroup()] and not AstreaToolbox.Config.DefaultAdmins.Players[ply:SteamID64()] then return end
 
 	local ent_class = ent:GetClass()
 	AstreaToolbox.Core.RemoveFromList("ent_blacklist_list", ent_class, 65535)
@@ -54,16 +60,18 @@ function TOOL:RightClick( trace )
 end
 
 function TOOL:Reload(trace)
-	local ply = self:GetOwner()
-	if not AstreaToolbox.Config.DefaultAdmins.UserGroups[ply:GetUserGroup()] and not AstreaToolbox.Config.DefaultAdmins.Players[ply:SteamID64()] then return end
+	if not trace then return end 
 
 	local ent = trace.Entity
-	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( !IsValid( ent ) ) then return false end
+
+	local ply = self:GetOwner()
+	if not AstreaToolbox.Config.DefaultAdmins.UserGroups[ply:GetUserGroup()] and not AstreaToolbox.Config.DefaultAdmins.Players[ply:SteamID64()] then return end
 
 	local ent_class = ent:GetClass()
     local entities = AstreaToolbox.Core.GetSetting("ent_blacklist_list")
    
-    if entities[ent_class] then 
+    if (entities and entities[ent_class]) then 
         --AstreaToolbox.Core.Message(ply, "This entity is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
 		AstreaToolbox.Core.Notify(ply, "This entity is in the blacklist", 0, 2)
     else

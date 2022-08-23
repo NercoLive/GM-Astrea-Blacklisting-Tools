@@ -19,6 +19,7 @@ end
 
 -- Left click adds the model you are looking at to the blacklist
 function TOOL:LeftClick( trace )
+	if (CLIENT) then return end
 	if not trace then return end 
 	
 	local ent = trace.Entity
@@ -29,7 +30,7 @@ function TOOL:LeftClick( trace )
 
 	local model = ent:GetModel()
 	local models = AstreaToolbox.Core.GetSetting("prop_blacklist_list")
-	
+
 	if (models and models[model]) then
 		ent:Remove()
 	else
@@ -43,6 +44,7 @@ end
 
 -- right click removes the model you are looking at from the blacklist
 function TOOL:RightClick( trace )
+	if (CLIENT) then return end
 	if not trace then return end 
 	
 	local ent = trace.Entity
@@ -60,6 +62,7 @@ function TOOL:RightClick( trace )
 end
 
 function TOOL:Reload(trace)
+	if (CLIENT) then return end
 	if not trace then return end 
 	
 	local ent = trace.Entity
@@ -70,14 +73,15 @@ function TOOL:Reload(trace)
 
     local model = string.lower(ent:GetModel())
     local models = AstreaToolbox.Core.GetSetting("prop_blacklist_list")
-	
+
+
     if (models and models[model]) then 
-        --AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-		AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
+        AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
+		--AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
     else
-    	--AstreaToolbox.Core.Message(ply, "This model is not in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-		AstreaToolbox.Core.Notify(ply, "This model is not in the blacklist", 1, 2)
+    	AstreaToolbox.Core.Message(ply, "This model is not in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
+		--AstreaToolbox.Core.Notify(ply, "This model is not in the blacklist", 1, 2)
     end 
-	
+
 	return true
 end

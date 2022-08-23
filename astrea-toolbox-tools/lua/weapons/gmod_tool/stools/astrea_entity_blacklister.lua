@@ -19,6 +19,7 @@ end
 
 -- Left click adds the entity you are looking at to the blacklist
 function TOOL:LeftClick( trace )
+	if (CLIENT) then return end
 	if not trace then return end 
 
 	local ent = trace.Entity
@@ -43,6 +44,7 @@ end
 
 -- right click removes the entity you are looking at from the blacklist
 function TOOL:RightClick( trace )
+	if (CLIENT) then return end
 	if not trace then return end 
 
 	local ent = trace.Entity
@@ -60,6 +62,7 @@ function TOOL:RightClick( trace )
 end
 
 function TOOL:Reload(trace)
+	if (CLIENT) then return end
 	if not trace then return end 
 
 	local ent = trace.Entity

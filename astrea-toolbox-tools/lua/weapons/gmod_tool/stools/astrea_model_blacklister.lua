@@ -74,13 +74,12 @@ function TOOL:Reload(trace)
     local model = string.lower(ent:GetModel())
     local models = AstreaToolbox.Core.GetSetting("prop_blacklist_list")
 
-
     if (models and models[model]) then 
-        AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-		--AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
+        --AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
+		AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
     else
-    	AstreaToolbox.Core.Message(ply, "This model is not in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
-		--AstreaToolbox.Core.Notify(ply, "This model is not in the blacklist", 1, 2)
+    	--AstreaToolbox.Core.Message(ply, "This model is not in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
+		AstreaToolbox.Core.Notify(ply, "This model is not in the blacklist", 1, 2)
     end 
 
 	return true

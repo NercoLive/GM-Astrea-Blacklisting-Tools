@@ -74,6 +74,13 @@ function TOOL:Reload(trace)
     local model = string.lower(ent:GetModel())
     local models = AstreaToolbox.Core.GetSetting("prop_blacklist_list")
 
+    local inDefault = AstreaToolbox.Core.PropProtect.IsDefaultBlacklisted(model) and AstreaToolbox.Core.GetSetting("prop_blacklist_default")
+
+    if (inDefault) then 
+    	AstreaToolbox.Core.Notify(ply, "This model is in the default blacklist", 3, 2)
+    	return true
+    end
+
     if (models and models[model]) then 
         --AstreaToolbox.Core.Message(ply, "This model is in the blacklist", AstreaToolbox.Core.Translated("props_prefix"))
 		AstreaToolbox.Core.Notify(ply, "This model is in the blacklist", 0, 2)
